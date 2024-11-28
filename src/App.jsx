@@ -1,13 +1,8 @@
-import { Board } from "./Components/Board";
-import { ModeSelector } from "./Components/ModeSelector";
+import "./App.css";
+import { Home } from "./Screen/Home";
 
 function App() {
-  return (
-    <>
-      <Board />
-      {/* <ModeSelector /> */}
-    </>
-  );
+  return <Home />;
 }
 
 export default App;
