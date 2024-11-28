@@ -1,4 +1,4 @@
-import { Button } from "bootstrap";
+import { Container, Row, Col, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
 export const Home = () => {
