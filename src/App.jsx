@@ -1,6 +1,7 @@
-import "./App.css";
 import { useEffect, useState } from "react";
+import "./App.css";
 import { Board } from "./components/Board/Board";
+import { importImages } from "./utils/importImages";
 
 const App = () => {
   const [shuffleMemoBlocks, setShuffleMemoBlocks] = useState([]);
@@ -8,15 +9,24 @@ const App = () => {
   const [animating, setAnimating] = useState(false);
 
   useEffect(() => {
-    const numbersList = Array.from({ length: 6 }, (_, i) => i + 1); // Crea una lista de números del 1 al 6 y duplicarla
-    const shuffledNumbers = shuffleArray([...numbersList, ...numbersList]); // Duplica y mezcla
-    setShuffleMemoBlocks(
-      shuffledNumbers.map((number, index) => ({
-        index,
-        value: number,
-        flipped: false,
-      }))
-    );
+    const loadImages = async () => {
+      const imageModules = importImages();
+      const images = await Promise.all(
+        imageModules.map(({ resolver }) => resolver())
+      );
+
+      const shuffledImages = shuffleArray([...images, ...images]);
+
+      setShuffleMemoBlocks(
+        shuffledImages.map((image, index) => ({
+          index,
+          value: image.default,
+          flipped: false,
+        }))
+      );
+    };
+
+    loadImages();
   }, []);
 
   const shuffleArray = (array) => {

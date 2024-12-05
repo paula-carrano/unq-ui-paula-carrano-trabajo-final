@@ -14,7 +14,9 @@ export const MemoBlock = ({ memoBlock, animating, handleMemoClick }) => {
         }`}
       >
         <div className="memo-block-front"></div>
-        <div className="memo-block-back">{memoBlock.value}</div>
+        <div className="memo-block-back">
+          <img src={memoBlock.value} alt="Memo Block" className="memo-image" />
+        </div>
       </div>
     </div>
   );
