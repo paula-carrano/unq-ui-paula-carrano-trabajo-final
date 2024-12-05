@@ -26,11 +26,13 @@
 }
 
 .memo-block-front {
-  background-color: lightblue;
+  background-image: url("/src/assets/back.png");
+  background-size: cover;
+  background-position: center;
 }
 
 .memo-block-back {
-  background-color: red;
+  background-color: #add8e6;
   transform: rotateY(180deg);
   display: flex;
   justify-content: center;
