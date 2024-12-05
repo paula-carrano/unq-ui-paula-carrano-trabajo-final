@@ -1,4 +1,5 @@
 import "./memoBlock.css";
+
 export const MemoBlock = ({ memoBlock, animating, handleMemoClick }) => {
   return (
     <div
@@ -13,7 +14,7 @@ export const MemoBlock = ({ memoBlock, animating, handleMemoClick }) => {
         }`}
       >
         <div className="memo-block-front"></div>
-        <div className="memo-block-back">{memoBlock.l}</div>
+        <div className="memo-block-back">{memoBlock.value}</div>
       </div>
     </div>
   );

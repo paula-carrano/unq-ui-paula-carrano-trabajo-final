@@ -1,20 +1,14 @@
 .memo-block {
   cursor: pointer;
-  aspect-ratio: 1/1;
-}
-
-.memo-block-front,
-.memo-block-back {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-  border-radius: 4px;
+  position: relative;
+  width: 200px;
+  height: 200px;
 }
 
 .memo-block-inner {
-  position: relative;
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   text-align: center;
@@ -22,18 +16,28 @@
   transform-style: preserve-3d;
 }
 
+.memo-block-front,
 .memo-block-back {
-  background-color: red;
-  transform: rotateY(180deg);
-  box-shadow: 5px 5px 10px 0px rgba(0, 0, 0 /50%);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 55px;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: 4px;
 }
 
 .memo-block-front {
   background-color: lightblue;
+}
+
+.memo-block-back {
+  background-color: red;
+  transform: rotateY(180deg);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+  color: white;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
 }
 
 .memo-block-flipped {
