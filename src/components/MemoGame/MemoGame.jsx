@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { importImages, shuffleArray, loadImages } from "../../utils/index";
-import { Board, Sidebar } from "../index";
+import {
+  importImages,
+  shuffleArray,
+  loadImages,
+  checkGameOver,
+} from "../../utils/index";
+import { Board, Sidebar, ModalScore } from "../index";
 import { handleMemoClick } from "../../handlers/memoGameHandlers";
 import "./memoGame.css";
 
@@ -13,6 +18,9 @@ export const MemoGame = () => {
   const [playerScores, setPlayerScores] = useState([0, 0]);
   const [currentPlayer, setCurrentPlayer] = useState(0);
   const [selectedMemoBlock, setSelectedMemoBlock] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [winner, setWinner] = useState("");
+  const [winnerScore, setWinnerScore] = useState(0);
 
   useEffect(() => {
     const fetchImages = async () => {
@@ -30,6 +38,19 @@ export const MemoGame = () => {
   const handleBackToStart = () => {
     navigate("/");
   };
+
+  useEffect(() => {
+    if (shuffleMemoBlocks.length === 0) return;
+
+    checkGameOver(
+      shuffleMemoBlocks,
+      playerScores,
+      setWinner,
+      setWinnerScore,
+      setIsModalOpen,
+      mode
+    );
+  }, [shuffleMemoBlocks, playerScores, mode]);
 
   return (
     <div className="container-flex">
@@ -58,6 +79,15 @@ export const MemoGame = () => {
           )
         }
         gridSize={size}
+      />
+      <ModalScore
+        isOpen={isModalOpen}
+        onClose={() => {
+          setIsModalOpen(false);
+          handleBackToStart();
+        }}
+        winner={mode !== "singleplayer" ? winner : null}
+        winnerScore={mode === "singleplayer" ? playerScores[0] : winnerScore}
       />
     </div>
   );

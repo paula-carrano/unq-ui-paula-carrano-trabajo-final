@@ -14,6 +14,7 @@ export const BoardSizeSelector = () => {
     <div className="container-sizeBoard">
       <h1>Select Board Size</h1>
       <div className="button-row">
+        <button onClick={() => selectBoardSize(2)}>2x2</button>
         <button onClick={() => selectBoardSize(4)}>4x4</button>
         <button onClick={() => selectBoardSize(5)}>5x5</button>
         <button onClick={() => selectBoardSize(6)}>6x6</button>

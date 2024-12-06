@@ -10,15 +10,21 @@ export const Sidebar = ({
   return (
     <div className="container-sidebar">
       <p>
-        {mode === "multiplayer"
-          ? `Player 1: ${playerScores[0]}`
-          : `Player: ${playerScores[0]}`}
+        <strong>{mode === "multiplayer" ? "Player 1: " : "Score: "}</strong>
+        {playerScores[0]}
       </p>
-      {mode === "multiplayer" && <p>Player 2: {playerScores[1]}</p>}
-      <p>
-        Turn:{" "}
-        {mode === "multiplayer" ? `Player ${currentPlayer + 1}` : "Player"}
-      </p>
+      {mode === "multiplayer" && (
+        <p>
+          <strong>Player 2: </strong>
+          {playerScores[1]}
+        </p>
+      )}
+      {mode === "multiplayer" && (
+        <p>
+          <strong>Turn: </strong>
+          {`Player ${currentPlayer + 1}`}
+        </p>
+      )}
       <button onClick={handleBackToStart}>Back to Start</button>
     </div>
   );
