@@ -1,3 +1,4 @@
+/* Fondo oscuro del modal */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -12,7 +13,6 @@
 }
 
 .modal-content {
-  background: white;
   padding: 20px;
   border-radius: 10px;
   text-align: center;
