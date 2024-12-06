@@ -1,3 +1,4 @@
+// src/components/MemoGame/MemoGame.jsx
 import { useEffect, useState } from "react";
 import { importImages } from "../../utils/importImages";
 import { Board } from "../Board/Board";
@@ -6,7 +7,9 @@ export const MemoGame = () => {
   const [shuffleMemoBlocks, setShuffleMemoBlocks] = useState([]);
   const [selectedMemoBlock, setSelectedMemoBlock] = useState(null);
   const [animating, setAnimating] = useState(false);
-  const [score, setScore] = useState(0); // Estado para el contador de aciertos
+  const [player1Score, setPlayer1Score] = useState(0); // Puntaje de jugador 1
+  const [player2Score, setPlayer2Score] = useState(0); // Puntaje de jugador 2
+  const [currentPlayer, setCurrentPlayer] = useState(1); // 1 para jugador 1, 2 para jugador 2
 
   useEffect(() => {
     const loadImages = async () => {
@@ -48,8 +51,15 @@ export const MemoGame = () => {
     if (!selectedMemoBlock) {
       setSelectedMemoBlock(memoBlock);
     } else if (selectedMemoBlock.value === memoBlock.value) {
-      setScore((prevScore) => prevScore + 1);
+      // Incrementar el puntaje del jugador actual
+      if (currentPlayer === 1) {
+        setPlayer1Score((prevScore) => prevScore + 1);
+      } else {
+        setPlayer2Score((prevScore) => prevScore + 1);
+      }
       setSelectedMemoBlock(null);
+      // Cambiar al siguiente jugador
+      setCurrentPlayer(currentPlayer === 1 ? 2 : 1);
     } else {
       setAnimating(true);
       setTimeout(() => {
@@ -61,13 +71,15 @@ export const MemoGame = () => {
         setShuffleMemoBlocks(updatedMemoBlocks);
         setSelectedMemoBlock(null);
         setAnimating(false);
+        // Cambiar al siguiente jugador, incluso si no hay coincidencia
+        setCurrentPlayer(currentPlayer === 1 ? 2 : 1);
       }, 1000);
     }
   };
 
   return (
     <div style={{ display: "flex" }}>
-      {/* Mostramos el contador de aciertos a la izquierda */}
+      {/* Contenedor del puntaje de los jugadores */}
       <div
         style={{
           width: "200px",
@@ -77,7 +89,9 @@ export const MemoGame = () => {
           fontWeight: "bold",
         }}
       >
-        <p>Aciertos: {score}</p>
+        <p>Jugador 1: {player1Score}</p>
+        <p>Jugador 2: {player2Score}</p>
+        <p>Turno: Jugador {currentPlayer}</p>
       </div>
 
       <Board
