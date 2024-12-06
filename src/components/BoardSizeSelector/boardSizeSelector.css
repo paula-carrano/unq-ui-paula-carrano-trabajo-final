@@ -1,0 +1,40 @@
+.container-sizeBoard {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 90vh;
+  width: 100vh;
+  text-align: center;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  margin-top: 5%;
+}
+
+.container-sizeBoard h1 {
+  margin-bottom: 20px;
+  font-family: Arial, sans-serif;
+  color: #333;
+}
+
+.container-sizeBoard .button-row {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.container-sizeBoard button {
+  padding: 10px 20px;
+  font-size: 16px;
+  width: 100px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  text-align: center;
+}
+
+.container-sizeBoard button:hover {
+  background-color: #0056b3;
+}

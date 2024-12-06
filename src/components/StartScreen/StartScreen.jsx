@@ -1,6 +1,6 @@
-// src/components/StartScreen/StartScreen.jsx
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import "./startScreen.css";
 
 const StartScreen = () => {
   const navigate = useNavigate();
@@ -14,7 +14,7 @@ const StartScreen = () => {
   };
 
   return (
-    <div>
+    <div className="container-screen">
       <h1>Welcome to the Memo Game!</h1>
       <button onClick={startSinglePlayer}>Single Player</button>
       <button onClick={startMultiplayer}>Multiplayer</button>
