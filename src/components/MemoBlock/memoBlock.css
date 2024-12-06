@@ -32,7 +32,7 @@
 }
 
 .memo-block-back {
-  background-color: #add8e6;
+  background-color: #dce4fa;
   transform: rotateY(180deg);
   display: flex;
   justify-content: center;

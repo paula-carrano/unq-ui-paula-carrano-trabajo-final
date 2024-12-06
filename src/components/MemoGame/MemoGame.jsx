@@ -1,15 +1,18 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { importImages } from "../../utils/importImages";
 import { Board } from "../Board/Board";
+import { Sidebar } from "../Sidebar/Sidebar";
+import "./memoGame.css";
 
 export const MemoGame = () => {
-  const { mode, size } = useParams(); // Obtén el modo y tamaño del tablero de la URL
+  const { mode, size } = useParams();
   const navigate = useNavigate();
   const [shuffleMemoBlocks, setShuffleMemoBlocks] = useState([]);
   const [animating, setAnimating] = useState(false);
-  const [playerScores, setPlayerScores] = useState([0, 0]); // Para dos jugadores
+  const [playerScores, setPlayerScores] = useState([0, 0]);
   const [currentPlayer, setCurrentPlayer] = useState(0);
+  const [selectedMemoBlock, setSelectedMemoBlock] = useState(null);
 
   useEffect(() => {
     const loadImages = async () => {
@@ -48,7 +51,7 @@ export const MemoGame = () => {
   };
 
   const handleMemoClick = (memoBlock) => {
-    if (animating || memoBlock.flipped) return; // No hacer nada si está animando o ya está volteada
+    if (animating || memoBlock.flipped) return;
 
     const flippedMemoBlock = { ...memoBlock, flipped: true };
     const updatedMemoBlocks = [...shuffleMemoBlocks];
@@ -57,7 +60,10 @@ export const MemoGame = () => {
 
     if (!selectedMemoBlock) {
       setSelectedMemoBlock(memoBlock);
-    } else if (selectedMemoBlock.value === memoBlock.value) {
+    } else if (
+      selectedMemoBlock &&
+      selectedMemoBlock.value === memoBlock.value
+    ) {
       const newScores = [...playerScores];
       newScores[currentPlayer] += 1;
       setPlayerScores(newScores);
@@ -81,7 +87,7 @@ export const MemoGame = () => {
     }
 
     // Si encontró una pareja, no cambia el turno, solo se espera a que termine el movimiento
-    if (selectedMemoBlock.value !== memoBlock.value) {
+    if (selectedMemoBlock && selectedMemoBlock.value !== memoBlock.value) {
       setCurrentPlayer((prev) => (prev === 0 ? 1 : 0)); // Cambiar turno
     }
   };
@@ -91,21 +97,13 @@ export const MemoGame = () => {
   };
 
   return (
-    <div style={{ display: "flex" }}>
-      <div style={{ width: "200px", padding: "10px", textAlign: "center" }}>
-        <p>
-          {mode === "multiplayer"
-            ? `Player 1: ${playerScores[0]}`
-            : `Player: ${playerScores[0]}`}
-        </p>
-        {mode === "multiplayer" && <p>Player 2: {playerScores[1]}</p>}
-        <p>
-          Turn:{" "}
-          {mode === "multiplayer" ? `Player ${currentPlayer + 1}` : "Player"}
-        </p>
-        <button onClick={handleBackToStart}>Back to Start</button>
-      </div>
-
+    <div className="container-flex">
+      <Sidebar
+        mode={mode}
+        playerScores={playerScores}
+        currentPlayer={currentPlayer}
+        handleBackToStart={handleBackToStart}
+      />
       <Board
         memoBlocks={shuffleMemoBlocks}
         animating={animating}
