@@ -1,15 +1,17 @@
 // src/components/MemoGame/MemoGame.jsx
 import { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import { importImages } from "../../utils/importImages";
 import { Board } from "../Board/Board";
 
 export const MemoGame = () => {
+  const { mode } = useParams(); // Obtén el modo de juego de la ruta
+  const navigate = useNavigate(); // Para poder redirigir
   const [shuffleMemoBlocks, setShuffleMemoBlocks] = useState([]);
   const [selectedMemoBlock, setSelectedMemoBlock] = useState(null);
   const [animating, setAnimating] = useState(false);
-  const [player1Score, setPlayer1Score] = useState(0); // Puntaje de jugador 1
-  const [player2Score, setPlayer2Score] = useState(0); // Puntaje de jugador 2
-  const [currentPlayer, setCurrentPlayer] = useState(1); // 1 para jugador 1, 2 para jugador 2
+  const [playerScores, setPlayerScores] = useState([0, 0]); // Para dos jugadores
+  const [currentPlayer, setCurrentPlayer] = useState(0); // Determina qué jugador está jugando
 
   useEffect(() => {
     const loadImages = async () => {
@@ -41,7 +43,7 @@ export const MemoGame = () => {
   };
 
   const handleMemoClick = (memoBlock) => {
-    if (animating) return;
+    if (animating || memoBlock.flipped) return; // No hacer nada si está animando o ya está volteada
 
     const flippedMemoBlock = { ...memoBlock, flipped: true };
     const updatedMemoBlocks = [...shuffleMemoBlocks];
@@ -51,15 +53,10 @@ export const MemoGame = () => {
     if (!selectedMemoBlock) {
       setSelectedMemoBlock(memoBlock);
     } else if (selectedMemoBlock.value === memoBlock.value) {
-      // Incrementar el puntaje del jugador actual
-      if (currentPlayer === 1) {
-        setPlayer1Score((prevScore) => prevScore + 1);
-      } else {
-        setPlayer2Score((prevScore) => prevScore + 1);
-      }
+      const newScores = [...playerScores];
+      newScores[currentPlayer] += 1;
+      setPlayerScores(newScores);
       setSelectedMemoBlock(null);
-      // Cambiar al siguiente jugador
-      setCurrentPlayer(currentPlayer === 1 ? 2 : 1);
     } else {
       setAnimating(true);
       setTimeout(() => {
@@ -71,15 +68,25 @@ export const MemoGame = () => {
         setShuffleMemoBlocks(updatedMemoBlocks);
         setSelectedMemoBlock(null);
         setAnimating(false);
-        // Cambiar al siguiente jugador, incluso si no hay coincidencia
-        setCurrentPlayer(currentPlayer === 1 ? 2 : 1);
+
+        // Cambiar turno después de un intento fallido
+        setCurrentPlayer((prev) => (prev === 0 ? 1 : 0));
       }, 1000);
+      return;
     }
+
+    // Si encontró una pareja, no cambia el turno, solo se espera a que termine el movimiento
+    if (selectedMemoBlock.value !== memoBlock.value) {
+      setCurrentPlayer((prev) => (prev === 0 ? 1 : 0)); // Cambiar turno
+    }
+  };
+
+  const handleBackToStart = () => {
+    navigate("/"); // Redirige a la pantalla de inicio
   };
 
   return (
     <div style={{ display: "flex" }}>
-      {/* Contenedor del puntaje de los jugadores */}
       <div
         style={{
           width: "200px",
@@ -89,9 +96,22 @@ export const MemoGame = () => {
           fontWeight: "bold",
         }}
       >
-        <p>Jugador 1: {player1Score}</p>
-        <p>Jugador 2: {player2Score}</p>
-        <p>Turno: Jugador {currentPlayer}</p>
+        <p>
+          {mode === "multiplayer"
+            ? `Jugador 1: ${playerScores[0]}`
+            : `Jugador: ${playerScores[0]}`}
+        </p>
+        {mode === "multiplayer" && <p>Jugador 2: {playerScores[1]}</p>}
+
+        {/* Mostrar turno del jugador actual */}
+        <p>
+          Turno de{" "}
+          {mode === "multiplayer" ? `Jugador ${currentPlayer + 1}` : "Jugador"}
+        </p>
+
+        <button onClick={handleBackToStart} style={styles.button}>
+          Volver al Inicio
+        </button>
       </div>
 
       <Board
@@ -101,4 +121,18 @@ export const MemoGame = () => {
       />
     </div>
   );
+};
+
+const styles = {
+  button: {
+    padding: "10px 20px",
+    marginTop: "10px",
+    fontSize: "16px",
+    cursor: "pointer",
+    borderRadius: "5px",
+    backgroundColor: "#f44336",
+    color: "white",
+    border: "none",
+    outline: "none",
+  },
 };
