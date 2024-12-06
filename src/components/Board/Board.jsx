@@ -1,4 +1,4 @@
-import { MemoBlock } from "../MemoBlock/MemoBlock";
+import { MemoBlock } from "../index";
 import "./board.css";
 
 export const Board = ({ memoBlocks, animating, handleMemoClick, gridSize }) => {

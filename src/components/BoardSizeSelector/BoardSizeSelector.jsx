@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import "./boardSizeSelector.css";
 
-const BoardSizeSelector = () => {
+export const BoardSizeSelector = () => {
   const { mode } = useParams();
   const navigate = useNavigate();
 
@@ -21,5 +21,3 @@ const BoardSizeSelector = () => {
     </div>
   );
 };
-
-export default BoardSizeSelector;

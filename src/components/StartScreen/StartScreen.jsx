@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import "./startScreen.css";
 
-const StartScreen = () => {
+export const StartScreen = () => {
   const navigate = useNavigate();
 
   const startSinglePlayer = () => {
@@ -21,5 +21,3 @@ const StartScreen = () => {
     </div>
   );
 };
-
-export default StartScreen;

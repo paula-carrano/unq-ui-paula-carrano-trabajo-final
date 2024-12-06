@@ -1,9 +1,6 @@
-// src/App.jsx
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import StartScreen from "./components/StartScreen/StartScreen";
-import { MemoGame } from "./components/MemoGame/MemoGame";
-import BoardSizeSelector from "./components/BoardSizeSelector/BoardSizeSelector";
+import { MemoGame, BoardSizeSelector, StartScreen } from "./components/index";
 
 const App = () => {
   return (
