@@ -1,9 +1,14 @@
 import { MemoBlock } from "../MemoBlock/MemoBlock";
 import "./board.css";
 
-export const Board = ({ memoBlocks, animating, handleMemoClick }) => {
+export const Board = ({ memoBlocks, animating, handleMemoClick, gridSize }) => {
   return (
-    <div className="board">
+    <div
+      className="board"
+      style={{
+        gridTemplateColumns: `repeat(${gridSize}, 1fr)`,
+      }}
+    >
       {memoBlocks.map((memoBlock) => (
         <MemoBlock
           key={memoBlock.index}

@@ -1,17 +1,15 @@
-// src/components/MemoGame/MemoGame.jsx
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { importImages } from "../../utils/importImages";
 import { Board } from "../Board/Board";
 
 export const MemoGame = () => {
-  const { mode } = useParams(); // Obtén el modo de juego de la ruta
-  const navigate = useNavigate(); // Para poder redirigir
+  const { mode, size } = useParams(); // Obtén el modo y tamaño del tablero de la URL
+  const navigate = useNavigate();
   const [shuffleMemoBlocks, setShuffleMemoBlocks] = useState([]);
-  const [selectedMemoBlock, setSelectedMemoBlock] = useState(null);
   const [animating, setAnimating] = useState(false);
   const [playerScores, setPlayerScores] = useState([0, 0]); // Para dos jugadores
-  const [currentPlayer, setCurrentPlayer] = useState(0); // Determina qué jugador está jugando
+  const [currentPlayer, setCurrentPlayer] = useState(0);
 
   useEffect(() => {
     const loadImages = async () => {
@@ -20,7 +18,14 @@ export const MemoGame = () => {
         imageModules.map(({ resolver }) => resolver())
       );
 
-      const shuffledImages = shuffleArray([...images, ...images]);
+      // Calcula el número total de bloques (size * size)
+      const totalBlocks = size * size;
+      const selectedImages = images.slice(0, totalBlocks / 2);
+
+      const shuffledImages = shuffleArray([
+        ...selectedImages,
+        ...selectedImages,
+      ]);
 
       setShuffleMemoBlocks(
         shuffledImages.map((image, index) => ({
@@ -32,7 +37,7 @@ export const MemoGame = () => {
     };
 
     loadImages();
-  }, []);
+  }, [size]);
 
   const shuffleArray = (array) => {
     for (let i = array.length - 1; i > 0; i--) {
@@ -82,57 +87,31 @@ export const MemoGame = () => {
   };
 
   const handleBackToStart = () => {
-    navigate("/"); // Redirige a la pantalla de inicio
+    navigate("/");
   };
 
   return (
     <div style={{ display: "flex" }}>
-      <div
-        style={{
-          width: "200px",
-          padding: "10px",
-          textAlign: "center",
-          fontSize: "24px",
-          fontWeight: "bold",
-        }}
-      >
+      <div style={{ width: "200px", padding: "10px", textAlign: "center" }}>
         <p>
           {mode === "multiplayer"
-            ? `Jugador 1: ${playerScores[0]}`
-            : `Jugador: ${playerScores[0]}`}
+            ? `Player 1: ${playerScores[0]}`
+            : `Player: ${playerScores[0]}`}
         </p>
-        {mode === "multiplayer" && <p>Jugador 2: {playerScores[1]}</p>}
-
-        {/* Mostrar turno del jugador actual */}
+        {mode === "multiplayer" && <p>Player 2: {playerScores[1]}</p>}
         <p>
-          Turno de{" "}
-          {mode === "multiplayer" ? `Jugador ${currentPlayer + 1}` : "Jugador"}
+          Turn:{" "}
+          {mode === "multiplayer" ? `Player ${currentPlayer + 1}` : "Player"}
         </p>
-
-        <button onClick={handleBackToStart} style={styles.button}>
-          Volver al Inicio
-        </button>
+        <button onClick={handleBackToStart}>Back to Start</button>
       </div>
 
       <Board
         memoBlocks={shuffleMemoBlocks}
         animating={animating}
         handleMemoClick={handleMemoClick}
+        gridSize={size}
       />
     </div>
   );
-};
-
-const styles = {
-  button: {
-    padding: "10px 20px",
-    marginTop: "10px",
-    fontSize: "16px",
-    cursor: "pointer",
-    borderRadius: "5px",
-    backgroundColor: "#f44336",
-    color: "white",
-    border: "none",
-    outline: "none",
-  },
 };
