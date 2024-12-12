@@ -87,7 +87,11 @@ export const MemoGame = () => {
           handleBackToStart();
         }}
         winner={mode !== "singleplayer" ? winner : null}
-        winnerScore={mode === "singleplayer" ? playerScores[0] : winnerScore}
+        winnerScore={
+          mode === "singleplayer"
+            ? playerScores[0] + playerScores[1]
+            : winnerScore
+        }
       />
     </div>
   );
