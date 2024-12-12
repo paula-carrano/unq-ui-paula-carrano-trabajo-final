@@ -11,19 +11,21 @@ export const Sidebar = ({
     <div className="container-sidebar">
       <p>
         <strong>{mode === "multiplayer" ? "Player 1: " : "Score: "}</strong>
-        {playerScores[0]}
+        {mode === "multiplayer"
+          ? playerScores[0]
+          : playerScores[0] + playerScores[1]}
       </p>
       {mode === "multiplayer" && (
-        <p>
-          <strong>Player 2: </strong>
-          {playerScores[1]}
-        </p>
-      )}
-      {mode === "multiplayer" && (
-        <p>
-          <strong>Turn: </strong>
-          {`Player ${currentPlayer + 1}`}
-        </p>
+        <>
+          <p>
+            <strong>Player 2: </strong>
+            {playerScores[1]}
+          </p>
+          <p>
+            <strong>Turn: </strong>
+            {`Player ${currentPlayer + 1}`}
+          </p>
+        </>
       )}
       <button onClick={handleBackToStart}>Back to Start</button>
     </div>
