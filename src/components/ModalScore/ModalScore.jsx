@@ -17,11 +17,17 @@ export const ModalScore = ({ isOpen, onClose, winner, winnerScore, mode }) => {
     >
       <div className="modal-content">
         <h2 id="modalTitle">
-          {mode === "singleplayer" ? "Game Over!" : "Winner!"}
+          {mode === "singleplayer"
+            ? "Game Over!"
+            : winner === "It's a tie!"
+            ? "It's a Tie!"
+            : "Winner!"}
         </h2>
         <p id="modalDescription">
           {mode === "singleplayer" ? (
             <span>Your score: {winnerScore}</span>
+          ) : winner === "It's a tie!" ? (
+            <span> {winnerScore} points for each player!</span>
           ) : (
             <span>
               <strong>{winner}</strong> wins with <strong>{winnerScore}</strong>{" "}

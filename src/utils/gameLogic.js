@@ -9,19 +9,21 @@ export const checkGameOver = (
   const allFlipped = shuffleMemoBlocks.every((block) => block.flipped);
 
   if (allFlipped) {
-    const gameResult = {
+    const result = {
       singleplayer: {
         winner: "",
-        winnerScore: playerScores[0]+playerScores[1],
+        winnerScore: playerScores[0] + playerScores[1],
       },
       multiplayer: {
-        winner: playerScores[0] > playerScores[1] ? "Player 1" : "Player 2",
-        winnerScore: playerScores[0] > playerScores[1] ? playerScores[0] : playerScores[1],
+        winner: playerScores[0] === playerScores[1] ? "It's a tie!" : (playerScores[0] > playerScores[1] ? "Player 1" : "Player 2"),
+        winnerScore: playerScores[0] === playerScores[1] ? playerScores[0] : (playerScores[0] > playerScores[1] ? playerScores[0] : playerScores[1]),
       },
     };
 
-    if (gameResult[mode]) {
-      const { winner, winnerScore } = gameResult[mode];
+    const gameResult = result[mode];
+
+    if (gameResult) {
+      const { winner, winnerScore } = gameResult;
       setWinner(winner);
       setWinnerScore(winnerScore);
       setIsModalOpen(true);
