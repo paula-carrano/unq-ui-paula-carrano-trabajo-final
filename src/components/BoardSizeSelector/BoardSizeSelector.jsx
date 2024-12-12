@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import "./boardSizeSelector.css";
 
@@ -6,8 +6,18 @@ export const BoardSizeSelector = () => {
   const { mode } = useParams();
   const navigate = useNavigate();
 
+  useEffect(() => {
+    if (mode !== "singleplayer" && mode !== "multiplayer") {
+      navigate("/error");
+    }
+  }, [mode, navigate]);
+
   const selectBoardSize = (size) => {
-    navigate(`/game/${mode}/${size}`);
+    if (size < 2 && size > 6) {
+      navigate("/error");
+    } else {
+      navigate(`/${mode}/${size}`);
+    }
   };
 
   return (

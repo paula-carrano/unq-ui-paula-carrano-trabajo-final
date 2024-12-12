@@ -22,6 +22,21 @@ export const MemoGame = () => {
   const [winner, setWinner] = useState("");
   const [winnerScore, setWinnerScore] = useState(0);
 
+  const boardSize = Number(size);
+
+  useEffect(() => {
+    if (
+      (mode !== "singleplayer" && mode !== "multiplayer") ||
+      isNaN(size) ||
+      size < 2 ||
+      size > 6
+    ) {
+      navigate("/error");
+    } else if (isNaN(size) || size < 2 || size > 6) {
+      navigate("/error");
+    }
+  }, [mode, size, navigate]);
+
   useEffect(() => {
     const fetchImages = async () => {
       const shuffledMemoBlocks = await loadImages(

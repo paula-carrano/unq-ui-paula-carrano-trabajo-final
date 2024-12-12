@@ -6,11 +6,11 @@ export const StartScreen = () => {
   const navigate = useNavigate();
 
   const startSinglePlayer = () => {
-    navigate("/game/singleplayer");
+    navigate("/singleplayer");
   };
 
   const startMultiplayer = () => {
-    navigate("/game/multiplayer");
+    navigate("/multiplayer");
   };
 
   return (

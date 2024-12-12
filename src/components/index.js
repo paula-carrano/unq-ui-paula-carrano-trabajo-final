@@ -5,3 +5,4 @@ export {MemoGame} from "./MemoGame/MemoGame";
 export { Sidebar } from "./Sidebar/Sidebar";
 export {StartScreen} from "./StartScreen/StartScreen";
 export {ModalScore} from "./ModalScore/ModalScore";
+export {ErrorPage} from "./ErrorPage/ErrorPage";
