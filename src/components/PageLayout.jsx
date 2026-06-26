@@ -1,7 +1,11 @@
-export const PageLayout = ({ children }) => {
+export const PageLayout = ({
+    children,
+    layoutClassName = "",
+    pageClassName = "",
+}) => {
     return (
-        <main className="min-vh-100 border rounded-3 bg-light px-3 py-4">
-            {children}
+        <main className={`app-layout ${layoutClassName}`}>
+            <div className={`app-page ${pageClassName}`}>{children}</div>
         </main>
     );
 };

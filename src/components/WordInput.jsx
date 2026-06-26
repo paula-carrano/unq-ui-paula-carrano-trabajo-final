@@ -13,11 +13,13 @@ export const WordInput = ({ error, isValidating, onSubmit }) => {
     };
 
     return (
-        <section>
-            <h2>Ingresa una palabra</h2>
+        <section className="p-4">
+            <h2 className="mb-3 text-uppercase fw-bold text-dark fs-6">
+                Ingresa una palabra
+            </h2>
 
             <Form onSubmit={handleSubmit}>
-                <InputGroup>
+                <InputGroup className="mb-3">
                     <Form.Control
                         type="text"
                         value={word}
@@ -25,7 +27,11 @@ export const WordInput = ({ error, isValidating, onSubmit }) => {
                         placeholder="Escribe una palabra..."
                         onChange={(event) => setWord(event.target.value)}
                     />
-                    <Button type="submit" disabled={isValidating}>
+                    <Button
+                        type="submit"
+                        disabled={isValidating}
+                        className="d-flex align-items-center gap-2 px-4"
+                    >
                         {isValidating ? (
                             "Validando..."
                         ) : (
@@ -37,13 +43,19 @@ export const WordInput = ({ error, isValidating, onSubmit }) => {
                 </InputGroup>
             </Form>
 
-            <ul>
+            <ul className="mb-3 rounded-3 bg-light py-3 pe-3 text-secondary small">
                 <li>La palabra debe existir.</li>
                 <li>No puede haber sido utilizada antes.</li>
-                <li>Debe comenzar con la ultima letra de la palabra anterior.</li>
+                <li>
+                    Debe comenzar con la ultima letra de la palabra anterior.
+                </li>
             </ul>
 
-            {error && <Alert variant="danger">{error}</Alert>}
+            {error && (
+                <Alert variant="danger" className="mb-0 py-2 small">
+                    {error}
+                </Alert>
+            )}
         </section>
     );
 };
