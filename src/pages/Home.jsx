@@ -1,20 +1,67 @@
-import { Trophy, Play } from "lucide-react";
-import { Button, Container } from "react-bootstrap";
+import { Trophy, Play, Link2 } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Button, Col, Container, Row, Stack } from "react-bootstrap";
 
 export const Home = () => {
     return (
-        <Container>
-            <h1>Palabras encadenadas</h1>
-            <p>
-                Formá la cadena más larga de palabras antes de que el tiempo
-                termine
-            </p>
-            <Button variant="primary" href="/game">
-                <Play size={24} /> Jugar
-            </Button>
-            <Button variant="outline-primary" href="/leaderboard">
-                <Trophy size={24} /> Ver ranking
-            </Button>
-        </Container>
+        <main className="min-vh-100 border rounded-3 d-flex align-items-center justify-content-center px-3 py-4">
+            <Container fluid>
+                <Row className="justify-content-center">
+                    <Col xs={12} sm={9} md={6} lg={4} xl={3}>
+                        <Stack
+                            gap={4}
+                            className="align-items-center text-center mx-auto"
+                        >
+                            <Link2
+                                size={52}
+                                strokeWidth={3}
+                                aria-hidden="true"
+                                style={{ color: "#008ca5" }}
+                            />
+
+                            <div>
+                                <h1 className="mb-3 text-uppercase fw-bold lh-sm fs-3 text-dark">
+                                    Palabras
+                                    <br />
+                                    encadenadas
+                                </h1>
+                                <p className="mb-0 text-secondary">
+                                    Forma la cadena mas larga de palabras
+                                    <br className="d-none d-sm-block" />
+                                    antes de que se acabe el tiempo.
+                                </p>
+                            </div>
+
+                            <Stack gap={3} className="w-100">
+                                <Button
+                                    as={Link}
+                                    to="/game"
+                                    size="lg"
+                                    className="border-0 fw-semibold d-flex align-items-center justify-content-center gap-2 py-2"
+                                    style={{
+                                        background:
+                                            "linear-gradient(90deg, #08abc6 0%, #0492d9 100%)",
+                                    }}
+                                >
+                                    <Play size={22} fill="currentColor" />
+                                    Jugar
+                                </Button>
+
+                                <Button
+                                    as={Link}
+                                    to="/leaderboard"
+                                    variant="outline-primary"
+                                    size="lg"
+                                    className=" fw-semibold d-flex align-items-center justify-content-center gap-2 py-2"
+                                >
+                                    <Trophy size={20} />
+                                    Ver puntajes
+                                </Button>
+                            </Stack>
+                        </Stack>
+                    </Col>
+                </Row>
+            </Container>
+        </main>
     );
 };
