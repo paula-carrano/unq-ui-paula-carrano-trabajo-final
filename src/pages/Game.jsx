@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Col, Container, Row } from "react-bootstrap";
 import { Header, WordChain, WordInput } from "../components";
 import { validateWord } from "../service/api";
 
@@ -78,18 +79,27 @@ export const Game = () => {
     };
 
     return (
-        <div>
-            <Header
-                timeLeft={timeLeft}
-                score={score}
-                wordCount={wordChain.length}
-            />
-            <WordChain words={wordChain} />
-            <WordInput
-                error={error}
-                isValidating={isValidating}
-                onSubmit={handleWordSubmit}
-            />
+        <div className="game-shell">
+            <Container fluid className="game-container px-0">
+                <Row className="game-row justify-content-center">
+                    <Col xs={12} className="game-col">
+                        <div className="game-panel">
+                            <Header
+                                timeLeft={timeLeft}
+                                score={score}
+                                wordCount={wordChain.length}
+                            />
+
+                            <WordChain words={wordChain} />
+                            <WordInput
+                                error={error}
+                                isValidating={isValidating}
+                                onSubmit={handleWordSubmit}
+                            />
+                        </div>
+                    </Col>
+                </Row>
+            </Container>
         </div>
     );
 };

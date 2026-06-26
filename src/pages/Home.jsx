@@ -4,8 +4,8 @@ import { Button, Col, Container, Row, Stack } from "react-bootstrap";
 
 export const Home = () => {
     return (
-        <main className="min-vh-100 border rounded-3 d-flex align-items-center justify-content-center px-3 py-4">
-            <Container fluid>
+        <div className="page-fill d-flex align-items-center justify-content-center">
+            <Container fluid className="px-0">
                 <Row className="justify-content-center">
                     <Col xs={12} sm={9} md={6} lg={4} xl={3}>
                         <Stack
@@ -62,6 +62,6 @@ export const Home = () => {
                     </Col>
                 </Row>
             </Container>
-        </main>
+        </div>
     );
 };
