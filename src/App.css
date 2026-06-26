@@ -1,0 +1,42 @@
+.app-layout {
+    min-height: 100vh;
+    padding: 1.5rem 1rem;
+    background-color: #ffffff;
+}
+
+.app-layout-game {
+    background-color: #f3f6f8;
+}
+
+.app-page {
+    min-height: calc(100vh - 3rem);
+    width: 100%;
+    padding: 1.5rem 1rem;
+    background-color: #ffffff;
+}
+
+.app-page-game {
+    border: 1px solid #dee2e6;
+    border-radius: 0.5rem;
+}
+
+.page-fill {
+    min-height: calc(100vh - 6rem);
+}
+
+.game-shell {
+    min-height: calc(100vh - 6rem);
+    padding: 0;
+}
+
+.game-container,
+.game-row,
+.game-col {
+    min-height: inherit;
+}
+
+.game-panel {
+    min-height: inherit;
+    overflow: hidden;
+    background-color: transparent;
+}

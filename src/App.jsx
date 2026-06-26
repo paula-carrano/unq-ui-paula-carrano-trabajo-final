@@ -1,10 +1,16 @@
 import { Home, ErrorPage, GameOver, Game, LeaderBoard } from "./pages/index.js";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import { PageLayout } from "./components";
 
 function App() {
+    const { pathname } = useLocation();
+    const isGamePage = pathname === "/game";
+
     return (
-        <PageLayout>
+        <PageLayout
+            layoutClassName={isGamePage ? "app-layout-game" : ""}
+            pageClassName={isGamePage ? "app-page-game" : ""}
+        >
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/game" element={<Game />} />
