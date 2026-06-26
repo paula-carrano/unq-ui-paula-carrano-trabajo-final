@@ -1,5 +1,5 @@
-import { useState } from "react";
 import { Home, ErrorPage, GameOver, Game, LeaderBoard } from "./pages/index.js";
+import { Routes, Route } from "react-router-dom";
 
 function App() {
     return (
