@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Col, Container, Row } from "react-bootstrap";
 import { Header, WordChain, WordInput } from "../components";
@@ -14,9 +14,18 @@ export const Game = () => {
     const [isValidating, setIsValidating] = useState(false);
     const navigate = useNavigate();
 
+    const finishGame = useCallback(() => {
+        navigate("/game-over", {
+            state: {
+                score,
+                wordCount: wordChain.length,
+            },
+        });
+    }, [navigate, score, wordChain.length]);
+
     useEffect(() => {
         if (timeLeft === 0) {
-            navigate("/game-over");
+            finishGame();
             return;
         }
 
@@ -25,13 +34,13 @@ export const Game = () => {
         }, 1000);
 
         return () => clearTimeout(timerId);
-    }, [timeLeft, navigate]);
+    }, [timeLeft, finishGame]);
 
     const handleWordSubmit = async (word) => {
         const formattedWord = word.trim().toUpperCase();
 
         if (formattedWord === "") {
-            navigate("/game-over");
+            finishGame();
             return;
         }
 
@@ -40,7 +49,7 @@ export const Game = () => {
         );
 
         if (alreadyUsed) {
-            navigate("/game-over");
+            finishGame();
             return;
         }
 
@@ -51,7 +60,7 @@ export const Game = () => {
             const currentLetter = formattedWord.at(0);
 
             if (currentLetter !== expectedLetter) {
-                navigate("/game-over");
+                finishGame();
                 return;
             }
         }
@@ -62,11 +71,11 @@ export const Game = () => {
             const wordExists = await validateWord(formattedWord);
 
             if (!wordExists) {
-                navigate("/game-over");
+                finishGame();
                 return;
             }
         } catch {
-            navigate("/game-over");
+            finishGame();
             return;
         } finally {
             setIsValidating(false);
