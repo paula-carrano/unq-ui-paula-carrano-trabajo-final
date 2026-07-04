@@ -1,17 +1,16 @@
 import { Medal, MoveLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Container, ListGroup } from "react-bootstrap";
+import { getLeaderboardScores } from "../service/storage";
 
 export const LeaderBoard = () => {
-    const puntajes = [
-        { nombre: "Ana", puntaje: 50 },
-        { nombre: "Luis", puntaje: 40 },
-        { nombre: "Marta", puntaje: 30 },
-        { nombre: "Juan", puntaje: 20 },
-        { nombre: "Sofia", puntaje: 10 },
-    ];
     const puntajesCompletos = [
-        ...puntajes,
+        ...getLeaderboardScores()
+            .map((score) => ({
+                nombre: score.nombre || "-",
+                puntaje: Number(score.puntaje) || 0,
+            }))
+            .sort((a, b) => b.puntaje - a.puntaje),
         ...Array(10).fill({ nombre: "-", puntaje: 0 }),
     ].slice(0, 10);
 

@@ -1,8 +1,20 @@
+import { useState } from "react";
 import { Trophy, Play, Link2 } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button, Col, Container, Row, Stack } from "react-bootstrap";
+import { PlayerNameModal } from "../components";
+import { savePlayerName } from "../service/storage";
 
 export const Home = () => {
+    const navigate = useNavigate();
+    const [showPlayerModal, setShowPlayerModal] = useState(false);
+
+    const handlePlayerConfirm = (playerName) => {
+        savePlayerName(playerName);
+        setShowPlayerModal(false);
+        navigate("/game");
+    };
+
     return (
         <div className="page-fill d-flex align-items-center justify-content-center">
             <Container fluid className="px-0">
@@ -34,14 +46,14 @@ export const Home = () => {
 
                             <Stack gap={3} className="w-100">
                                 <Button
-                                    as={Link}
-                                    to="/game"
+                                    type="button"
                                     size="lg"
                                     className="border-0 fw-semibold d-flex align-items-center justify-content-center gap-2 py-2"
                                     style={{
                                         background:
                                             "linear-gradient(90deg, #08abc6 0%, #0492d9 100%)",
                                     }}
+                                    onClick={() => setShowPlayerModal(true)}
                                 >
                                     <Play size={22} fill="currentColor" />
                                     Jugar
@@ -62,6 +74,11 @@ export const Home = () => {
                     </Col>
                 </Row>
             </Container>
+            <PlayerNameModal
+                show={showPlayerModal}
+                onCancel={() => setShowPlayerModal(false)}
+                onConfirm={handlePlayerConfirm}
+            />
         </div>
     );
 };

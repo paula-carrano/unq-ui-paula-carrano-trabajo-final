@@ -1,8 +1,8 @@
-import { useCallback, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
-import { Header, WordChain, WordInput } from "../components";
+import { GameOverModal, Header, WordChain, WordInput } from "../components";
 import { validateWord } from "../service/api";
+import { saveLeaderboardScore } from "../service/storage";
 
 const WORD_TIME_LIMIT = 15;
 
@@ -12,29 +12,49 @@ export const Game = () => {
     const [wordChain, setWordChain] = useState([]);
     const [error, setError] = useState("");
     const [isValidating, setIsValidating] = useState(false);
-    const navigate = useNavigate();
+    const [isGameOver, setIsGameOver] = useState(false);
+    const scoreWasSaved = useRef(false);
 
     const finishGame = useCallback(() => {
-        navigate("/game-over", {
-            state: {
-                score,
-                wordCount: wordChain.length,
-            },
-        });
-    }, [navigate, score, wordChain.length]);
+        setIsGameOver(true);
+    }, []);
+
+    const handlePlayAgain = () => {
+        setTimeLeft(WORD_TIME_LIMIT);
+        setScore(0);
+        setWordChain([]);
+        setError("");
+        setIsValidating(false);
+        setIsGameOver(false);
+        scoreWasSaved.current = false;
+    };
 
     useEffect(() => {
-        if (timeLeft === 0) {
-            finishGame();
+        if (isGameOver) {
             return;
         }
 
         const timerId = setTimeout(() => {
+            if (timeLeft <= 1) {
+                setTimeLeft(0);
+                finishGame();
+                return;
+            }
+
             setTimeLeft((currentTime) => currentTime - 1);
         }, 1000);
 
         return () => clearTimeout(timerId);
-    }, [timeLeft, finishGame]);
+    }, [timeLeft, finishGame, isGameOver]);
+
+    useEffect(() => {
+        if (!isGameOver || scoreWasSaved.current) {
+            return;
+        }
+
+        saveLeaderboardScore(score);
+        scoreWasSaved.current = true;
+    }, [isGameOver, score]);
 
     const handleWordSubmit = async (word) => {
         const formattedWord = word.trim().toUpperCase();
@@ -104,6 +124,12 @@ export const Game = () => {
                                 error={error}
                                 isValidating={isValidating}
                                 onSubmit={handleWordSubmit}
+                            />
+                            <GameOverModal
+                                show={isGameOver}
+                                score={score}
+                                wordCount={wordChain.length}
+                                onPlayAgain={handlePlayAgain}
                             />
                         </div>
                     </Col>
