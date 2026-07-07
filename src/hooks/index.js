@@ -1,0 +1,1 @@
+export { useWordChainGame } from "./useWordChainGame";
