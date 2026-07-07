@@ -1,6 +1,11 @@
+export { ActionButton } from "./ActionButton";
+export { CenteredPage } from "./CenteredPage";
 export { Header } from "./Header";
 export { GameOverModal } from "./GameOverModal";
+export { ModalActions } from "./ModalActions";
 export { PageLayout } from "./PageLayout";
 export { PlayerNameModal } from "./PlayerNameModal";
+export { PrimaryButton } from "./PrimaryButton";
+export { StatCard } from "./StatCard";
 export { WordChain } from "./WordChain";
 export { WordInput } from "./WordInput";

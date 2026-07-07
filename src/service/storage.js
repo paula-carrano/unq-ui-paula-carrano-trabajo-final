@@ -1,3 +1,5 @@
+import { LEADERBOARD_LIMIT } from "../constants/game";
+
 const PLAYER_NAME_KEY = "playerName";
 const LEADERBOARD_SCORES_KEY = "leaderboardScores";
 const DEFAULT_PLAYER_NAME = "Jugador";
@@ -33,4 +35,16 @@ export const saveLeaderboardScore = (score) => {
         LEADERBOARD_SCORES_KEY,
         JSON.stringify(updatedScores),
     );
+};
+
+export const getTopLeaderboardScores = (limit = LEADERBOARD_LIMIT) => {
+    return [
+        ...getLeaderboardScores()
+            .map((score) => ({
+                nombre: score.nombre || "-",
+                puntaje: Number(score.puntaje) || 0,
+            }))
+            .sort((a, b) => b.puntaje - a.puntaje),
+        ...Array(limit).fill({ nombre: "-", puntaje: 0 }),
+    ].slice(0, limit);
 };

@@ -24,6 +24,22 @@
     min-height: calc(100vh - 6rem);
 }
 
+.home-brand-icon {
+    color: #008ca5;
+}
+
+.primary-gradient-button {
+    background: linear-gradient(90deg, #08abc6 0%, #0492d9 100%);
+}
+
+.header-stat-words {
+    color: #7f4dcc;
+}
+
+.leaderboard-list-wrapper {
+    max-width: 60%;
+}
+
 .game-shell {
     min-height: calc(100vh - 6rem);
     padding: 0;

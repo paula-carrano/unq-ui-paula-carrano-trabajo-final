@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Play, User } from "lucide-react";
-import { Button, Form, Modal, Stack } from "react-bootstrap";
+import { Button, Form, Modal } from "react-bootstrap";
+import { ModalActions } from "./ModalActions";
+import { PrimaryButton } from "./PrimaryButton";
 import { getPlayerName } from "../service/storage";
 
 export const PlayerNameModal = ({ show, onCancel, onConfirm }) => {
@@ -51,19 +53,14 @@ export const PlayerNameModal = ({ show, onCancel, onConfirm }) => {
                         </Form.Control.Feedback>
                     </Form.Group>
 
-                    <Stack gap={3}>
-                        <Button
+                    <ModalActions>
+                        <PrimaryButton
                             type="submit"
                             size="lg"
-                            className="border-0 fw-semibold d-flex align-items-center justify-content-center gap-2 py-2"
-                            style={{
-                                background:
-                                    "linear-gradient(90deg, #08abc6 0%, #0492d9 100%)",
-                            }}
+                            icon={<Play size={20} fill="currentColor" />}
                         >
-                            <Play size={20} fill="currentColor" />
                             Comenzar
-                        </Button>
+                        </PrimaryButton>
                         <Button
                             type="button"
                             variant="outline-secondary"
@@ -73,7 +70,7 @@ export const PlayerNameModal = ({ show, onCancel, onConfirm }) => {
                         >
                             Cancelar
                         </Button>
-                    </Stack>
+                    </ModalActions>
                 </Modal.Body>
             </Form>
         </Modal>

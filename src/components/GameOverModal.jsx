@@ -1,6 +1,10 @@
 import { Frown, RefreshCcw, Trophy } from "lucide-react";
 import { Link } from "react-router-dom";
-import { Button, Col, Modal, Row, Stack } from "react-bootstrap";
+import { Col, Modal, Row } from "react-bootstrap";
+import { ActionButton } from "./ActionButton";
+import { ModalActions } from "./ModalActions";
+import { PrimaryButton } from "./PrimaryButton";
+import { StatCard } from "./StatCard";
 
 export const GameOverModal = ({ show, score, wordCount, onPlayAgain }) => {
     return (
@@ -13,48 +17,35 @@ export const GameOverModal = ({ show, score, wordCount, onPlayAgain }) => {
 
                 <Row className="g-3 mb-4 mt-4">
                     <Col xs={6}>
-                        <div className="border rounded p-3">
-                            <p className="mb-2 small text-secondary">
-                                Palabras correctas
-                            </p>
-                            <p className="mb-0 fw-bold fs-4">{wordCount}</p>
-                        </div>
+                        <StatCard
+                            label="Palabras correctas"
+                            value={wordCount}
+                        />
                     </Col>
                     <Col xs={6}>
-                        <div className="border rounded p-3">
-                            <p className="mb-2 small text-secondary">
-                                Puntaje final
-                            </p>
-                            <p className="mb-0 fw-bold fs-4">{score}</p>
-                        </div>
+                        <StatCard label="Puntaje final" value={score} />
                     </Col>
                 </Row>
 
-                <Stack gap={3} className="w-100">
-                    <Button
+                <ModalActions>
+                    <PrimaryButton
                         type="button"
                         size="lg"
-                        className="border-0 fw-semibold d-flex align-items-center justify-content-center gap-2 py-2"
-                        style={{
-                            background:
-                                "linear-gradient(90deg, #08abc6 0%, #0492d9 100%)",
-                        }}
+                        icon={<RefreshCcw size={20} />}
                         onClick={onPlayAgain}
                     >
-                        <RefreshCcw size={20} />
                         Jugar de nuevo
-                    </Button>
-                    <Button
+                    </PrimaryButton>
+                    <ActionButton
                         as={Link}
                         to="/leaderboard"
                         variant="outline-secondary"
                         size="lg"
-                        className=" fw-semibold d-flex align-items-center justify-content-center gap-2 py-2"
+                        icon={<Trophy size={20} />}
                     >
-                        <Trophy size={20} />
                         Mejores puntajes
-                    </Button>
-                </Stack>
+                    </ActionButton>
+                </ModalActions>
             </Modal.Body>
         </Modal>
     );

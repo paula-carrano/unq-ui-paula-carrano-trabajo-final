@@ -1,6 +1,12 @@
 import { useState } from "react";
-import { Send } from "lucide-react";
+import { LoaderCircle, Send } from "lucide-react";
 import { Alert, Button, Form, InputGroup } from "react-bootstrap";
+
+const WORD_RULES = [
+    "La palabra debe existir.",
+    "No puede haber sido utilizada antes.",
+    "Debe comenzar con la ultima letra de la palabra anterior.",
+];
 
 export const WordInput = ({ error, isValidating, onSubmit }) => {
     const [word, setWord] = useState("");
@@ -30,13 +36,24 @@ export const WordInput = ({ error, isValidating, onSubmit }) => {
                     <Button
                         type="submit"
                         disabled={isValidating}
-                        className="d-flex align-items-center gap-2 px-4"
+                        className="d-flex align-items-center gap-2 px-3 px-sm-4"
                     >
                         {isValidating ? (
-                            "Validando..."
+                            <>
+                                <LoaderCircle size={18} aria-hidden="true" />
+                                <span className="d-none d-sm-inline">
+                                    Validando...
+                                </span>
+                                <span className="visually-hidden">
+                                    Validando palabra
+                                </span>
+                            </>
                         ) : (
                             <>
-                                <Send size={18} /> Enviar
+                                <Send size={18} aria-hidden="true" />
+                                <span className="d-none d-sm-inline">
+                                    Enviar
+                                </span>
                             </>
                         )}
                     </Button>
@@ -44,11 +61,9 @@ export const WordInput = ({ error, isValidating, onSubmit }) => {
             </Form>
 
             <ul className="mb-3 rounded-3 bg-light py-3 pe-3 text-secondary small">
-                <li>La palabra debe existir.</li>
-                <li>No puede haber sido utilizada antes.</li>
-                <li>
-                    Debe comenzar con la ultima letra de la palabra anterior.
-                </li>
+                {WORD_RULES.map((rule) => (
+                    <li key={rule}>{rule}</li>
+                ))}
             </ul>
 
             {error && (

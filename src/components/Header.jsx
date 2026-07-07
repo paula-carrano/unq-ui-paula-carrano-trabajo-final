@@ -15,35 +15,54 @@ const Timer = ({ timeLeft }) => {
     const formattedTime = `00:${String(timeLeft).padStart(2, "0")}`;
 
     return (
-        <Col xs={4} className="border-end">
-            <h2 className="mb-2 text-uppercase fw-bold text-dark fs-6">
-                <Clock3 size={14} className="me-1" />
-                Tiempo
-            </h2>
-            <p className="mb-0 fw-bold fs-3 text-primary">{formattedTime}</p>
-        </Col>
+        <HeaderStat
+            label="Tiempo"
+            value={formattedTime}
+            valueClassName="text-primary"
+            icon={<Clock3 size={14} className="me-1" />}
+            withBorder
+        />
     );
 };
 
 const Score = ({ score }) => {
     return (
-        <Col xs={4} className="border-end">
-            <h2 className="mb-2 text-uppercase fw-bold text-dark fs-6">
-                Puntaje
-            </h2>
-            <p className="mb-0 fw-bold fs-3 text-success">{score}</p>
-        </Col>
+        <HeaderStat
+            label="Puntaje"
+            value={score}
+            valueClassName="text-success"
+            withBorder
+        />
     );
 };
 
 const WordCount = ({ wordCount }) => {
     return (
-        <Col xs={4}>
+        <HeaderStat
+            label="Palabras"
+            value={wordCount}
+            valueClassName="header-stat-words"
+        />
+    );
+};
+
+const HeaderStat = ({
+    label,
+    value,
+    icon,
+    valueClassName = "",
+    withBorder = false,
+}) => {
+    return (
+        <Col xs={4} className={withBorder ? "border-end" : ""}>
             <h2 className="mb-2 text-uppercase fw-bold text-dark fs-6">
-                Palabras
+                {icon}
+                {label}
             </h2>
-            <p className="mb-0 fw-bold fs-3" style={{ color: "#7f4dcc" }}>
-                {wordCount}
+            <p
+                className={`mb-0 fw-bold fs-3 ${valueClassName}`.trim()}
+            >
+                {value}
             </p>
         </Col>
     );
