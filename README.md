@@ -1,14 +1,6 @@
-# UNQ UI - Trabajo Final
+# UNQ UI - Trabajo Final "Palabras Encadenadas"
 
 Proyecto frontend desarrollado con React y Vite.
-
-## Requisitos
-
-Antes de comenzar, asegurate de tener instalado:
-
-- Node.js
-- npm
-- Git
 
 ## Descargar e instalar el proyecto
 
@@ -50,16 +42,4 @@ Generar la version de produccion:
 
 ```bash
 npm run build
-```
-
-Previsualizar la version de produccion:
-
-```bash
-npm run preview
-```
-
-Revisar el codigo con ESLint:
-
-```bash
-npm run lint
 ```
