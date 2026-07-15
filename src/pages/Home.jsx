@@ -63,11 +63,13 @@ export const Home = () => {
                 </ActionButton>
             </Stack>
 
-            <PlayerNameModal
-                show={showPlayerModal}
-                onCancel={() => setShowPlayerModal(false)}
-                onConfirm={handlePlayerConfirm}
-            />
+            {showPlayerModal && (
+                <PlayerNameModal
+                    show={showPlayerModal}
+                    onCancel={() => setShowPlayerModal(false)}
+                    onConfirm={handlePlayerConfirm}
+                />
+            )}
         </CenteredPage>
     );
 };

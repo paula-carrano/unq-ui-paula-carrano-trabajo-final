@@ -31,15 +31,15 @@ export const LeaderBoard = () => {
                         >
                             <Row className="w-100 align-items-center">
                                 <Col xs={2}>{index + 1}.</Col>
-                                <Col className="d-flex justify-content-center">
-                                    <span className="d-inline-flex align-items-center">
-                                        <Medal
-                                            color={MEDAL_COLORS[index]}
-                                            size={20}
-                                            className={`me-2 ${index >= 3 ? "invisible" : ""}`}
-                                        />
-                                        {puntaje.nombre}
-                                    </span>
+                                <Col xs={1} className="text-end">
+                                    <Medal
+                                        color={MEDAL_COLORS[index]}
+                                        size={20}
+                                        className={index >= 3 ? "invisible" : ""}
+                                    />
+                                </Col>
+                                <Col className="text-start text-truncate">
+                                    {puntaje.nombre}
                                 </Col>
                                 <Col xs={2} className="text-end">
                                     {puntaje.puntaje}

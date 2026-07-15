@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { POINTS_PER_WORD, WORD_TIME_LIMIT } from "../constants/game";
+import { WORD_TIME_LIMIT } from "../constants/game";
 import { validateWord } from "../service/api";
 import { saveLeaderboardScore } from "../service/storage";
 
@@ -10,6 +10,7 @@ export const useWordChainGame = () => {
     const [error, setError] = useState("");
     const [isValidating, setIsValidating] = useState(false);
     const [isGameOver, setIsGameOver] = useState(false);
+    const [hasStarted, setHasStarted] = useState(false);
     const scoreWasSaved = useRef(false);
 
     const finishGame = useCallback(() => {
@@ -23,11 +24,12 @@ export const useWordChainGame = () => {
         setError("");
         setIsValidating(false);
         setIsGameOver(false);
+        setHasStarted(false);
         scoreWasSaved.current = false;
     };
 
     useEffect(() => {
-        if (isGameOver) {
+        if (!hasStarted || isGameOver) {
             return;
         }
 
@@ -43,7 +45,7 @@ export const useWordChainGame = () => {
         }, 1000);
 
         return () => clearTimeout(timerId);
-    }, [timeLeft, finishGame, isGameOver]);
+    }, [timeLeft, finishGame, hasStarted, isGameOver]);
 
     useEffect(() => {
         if (!isGameOver || scoreWasSaved.current) {
@@ -59,9 +61,10 @@ export const useWordChainGame = () => {
 
         if (formattedWord === "") {
             setError("Tenes que ingresar una palabra.");
-            finishGame();
             return;
         }
+
+        setHasStarted(true);
 
         const alreadyUsed = wordChain.some(
             (usedWord) => usedWord.toUpperCase() === formattedWord,
@@ -69,7 +72,6 @@ export const useWordChainGame = () => {
 
         if (alreadyUsed) {
             setError("Esa palabra ya fue utilizada.");
-            finishGame();
             return;
         }
 
@@ -83,7 +85,6 @@ export const useWordChainGame = () => {
                 setError(
                     `La palabra debe comenzar con la letra "${expectedLetter}".`,
                 );
-                finishGame();
                 return;
             }
         }
@@ -95,19 +96,17 @@ export const useWordChainGame = () => {
 
             if (!wordExists) {
                 setError("La palabra no existe.");
-                finishGame();
                 return;
             }
         } catch {
             setError("No se pudo validar la palabra. Intentalo de nuevo.");
-            finishGame();
             return;
         } finally {
             setIsValidating(false);
         }
 
         setWordChain((currentWords) => [...currentWords, formattedWord]);
-        setScore((currentScore) => currentScore + POINTS_PER_WORD);
+        setScore((currentScore) => currentScore + formattedWord.length);
         setTimeLeft(WORD_TIME_LIMIT);
         setError("");
     };

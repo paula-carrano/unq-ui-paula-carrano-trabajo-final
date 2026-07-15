@@ -1,3 +1,5 @@
+import { MoveLeft } from "lucide-react";
+import { Link } from "react-router-dom";
 import { Col, Container, Row } from "react-bootstrap";
 import { GameOverModal, Header, WordChain, WordInput } from "../components";
 import { useWordChainGame } from "../hooks";
@@ -21,6 +23,14 @@ export const Game = () => {
                 <Row className="game-row justify-content-center">
                     <Col xs={12} className="game-col">
                         <div className="game-panel">
+                            <div className="position-relative mb-2">
+                                <Link
+                                    className="text-dark position-absolute start-0"
+                                    to="/"
+                                >
+                                    <MoveLeft />
+                                </Link>
+                            </div>
                             <Header
                                 timeLeft={timeLeft}
                                 score={score}

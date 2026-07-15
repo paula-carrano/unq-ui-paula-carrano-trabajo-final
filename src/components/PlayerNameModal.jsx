@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Play, User } from "lucide-react";
 import { Button, Form, Modal } from "react-bootstrap";
 import { ModalActions } from "./ModalActions";
@@ -7,13 +7,6 @@ import { PrimaryButton } from "./PrimaryButton";
 export const PlayerNameModal = ({ show, onCancel, onConfirm }) => {
     const [name, setName] = useState("");
     const [wasSubmitted, setWasSubmitted] = useState(false);
-
-    useEffect(() => {
-        if (show) {
-            setName("");
-            setWasSubmitted(false);
-        }
-    }, [show]);
 
     const handleCancel = () => {
         setWasSubmitted(false);
