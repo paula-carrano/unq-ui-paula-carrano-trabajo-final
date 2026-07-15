@@ -36,10 +36,3 @@ Vite mostrara en la terminal la URL local para abrir la aplicacion en el navegad
 http://localhost:5173/
 ```
 
-## Comandos utiles
-
-Generar la version de produccion:
-
-```bash
-npm run build
-```
