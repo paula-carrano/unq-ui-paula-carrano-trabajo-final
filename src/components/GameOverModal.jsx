@@ -1,12 +1,18 @@
 import { Frown, RefreshCcw, Trophy } from "lucide-react";
 import { Link } from "react-router-dom";
-import { Col, Modal, Row } from "react-bootstrap";
+import { Alert, Col, Modal, Row } from "react-bootstrap";
 import { ActionButton } from "./ActionButton";
 import { ModalActions } from "./ModalActions";
 import { PrimaryButton } from "./PrimaryButton";
 import { StatCard } from "./StatCard";
 
-export const GameOverModal = ({ show, score, wordCount, onPlayAgain }) => {
+export const GameOverModal = ({
+    show,
+    score,
+    wordCount,
+    error,
+    onPlayAgain,
+}) => {
     return (
         <Modal show={show} centered backdrop="static" keyboard={false}>
             <Modal.Body className="text-center p-4">
@@ -14,6 +20,11 @@ export const GameOverModal = ({ show, score, wordCount, onPlayAgain }) => {
                 <Modal.Title className="fw-bold fs-3 mb-1">
                     Perdiste
                 </Modal.Title>
+                {error && (
+                    <Alert variant="danger" className="mt-3 mb-0 py-2">
+                        {error}
+                    </Alert>
+                )}
 
                 <Row className="g-3 mb-4 mt-4">
                     <Col xs={6}>

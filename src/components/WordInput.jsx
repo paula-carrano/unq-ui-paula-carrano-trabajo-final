@@ -1,15 +1,17 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { LoaderCircle, Send } from "lucide-react";
 import { Alert, Button, Form, InputGroup } from "react-bootstrap";
-
-const WORD_RULES = [
-    "La palabra debe existir.",
-    "No puede haber sido utilizada antes.",
-    "Debe comenzar con la ultima letra de la palabra anterior.",
-];
+import { WORD_RULES } from "../constants/game";
 
 export const WordInput = ({ error, isValidating, onSubmit }) => {
     const [word, setWord] = useState("");
+    const inputRef = useRef(null);
+
+    useEffect(() => {
+        if (!isValidating) {
+            inputRef.current?.focus();
+        }
+    }, [isValidating]);
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -27,6 +29,7 @@ export const WordInput = ({ error, isValidating, onSubmit }) => {
             <Form onSubmit={handleSubmit}>
                 <InputGroup className="mb-3">
                     <Form.Control
+                        ref={inputRef}
                         type="text"
                         value={word}
                         disabled={isValidating}

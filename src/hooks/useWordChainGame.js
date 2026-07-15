@@ -34,6 +34,7 @@ export const useWordChainGame = () => {
         const timerId = setTimeout(() => {
             if (timeLeft <= 1) {
                 setTimeLeft(0);
+                setError("Se termino el tiempo del turno.");
                 finishGame();
                 return;
             }
@@ -57,6 +58,7 @@ export const useWordChainGame = () => {
         const formattedWord = word.trim().toUpperCase();
 
         if (formattedWord === "") {
+            setError("Tenes que ingresar una palabra.");
             finishGame();
             return;
         }
@@ -66,6 +68,7 @@ export const useWordChainGame = () => {
         );
 
         if (alreadyUsed) {
+            setError("Esa palabra ya fue utilizada.");
             finishGame();
             return;
         }
@@ -77,6 +80,9 @@ export const useWordChainGame = () => {
             const currentLetter = formattedWord.at(0);
 
             if (currentLetter !== expectedLetter) {
+                setError(
+                    `La palabra debe comenzar con la letra "${expectedLetter}".`,
+                );
                 finishGame();
                 return;
             }
@@ -88,10 +94,12 @@ export const useWordChainGame = () => {
             const wordExists = await validateWord(formattedWord);
 
             if (!wordExists) {
+                setError("La palabra no existe.");
                 finishGame();
                 return;
             }
         } catch {
+            setError("No se pudo validar la palabra. Intentalo de nuevo.");
             finishGame();
             return;
         } finally {

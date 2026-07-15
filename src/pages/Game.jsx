@@ -37,6 +37,7 @@ export const Game = () => {
                                 show={isGameOver}
                                 score={score}
                                 wordCount={wordCount}
+                                error={error}
                                 onPlayAgain={playAgain}
                             />
                         </div>
